@@ -17,12 +17,12 @@
 .shine{background:linear-gradient(90deg,#8b5cf6,#e879f9,#8b5cf6);background-size:200% 100%;animation:shine 4s linear infinite}
 @keyframes shine{to{background-position:-200% 0}}
 </style>
-<div class="cut-s" style="padding:1px;height:170px;background:linear-gradient(160deg,#33215a,#1a1030)"><div class="cut-s body" style="padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+<div class="cut-s" style="padding:1px;height:170px;background:linear-gradient(160deg,#8b5cf6,#1a1030)"><div class="cut-s body" style="padding:16px 18px;display:flex;flex-direction:column;gap:8px">
 <div class="scan"></div>
-<div class="mono" style="position:relative;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#a39bbd"><span>CASE #002</span><span style="color:#a39bbd"><span class="pulse">●</span> ARCHIVADO</span></div>
+<div class="mono" style="position:relative;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#a39bbd"><span>CASE #002</span><span style="color:#c4b5fd"><span class="pulse">●</span> ACTIVO</span></div>
 <div class="mono" style="position:relative;font-size:17px;font-weight:700;color:#f5f3ff">Escaneo_de_Plantas</div>
 <div style="position:relative;font-size:13px;color:#a39bbd;height:34px;overflow:hidden">Proyecto en mi GitHub.</div>
-<div class="mono" style="position:relative;display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:auto"><span style="padding:3px 10px;border-radius:999px;border:1px solid #8b5cf6;color:#c4b5fd">TypeScript</span><span style="color:#a39bbd"> →</span></div>
+<div class="mono" style="position:relative;display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:auto"><span style="padding:3px 10px;border-radius:999px;border:1px solid #8b5cf6;color:#c4b5fd">TypeScript</span><span style="color:#a39bbd">hace 2 meses →</span></div>
 </div></div>
 </div>
 </foreignObject>
