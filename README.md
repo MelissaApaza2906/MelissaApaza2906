@@ -7,6 +7,15 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-1a1030?style=for-the-badge&logo=javascript&logoColor=c4b5fd&labelColor=0b0714" alt="JavaScript"/>
+  <img src="https://img.shields.io/badge/TypeScript-1a1030?style=for-the-badge&logo=typescript&logoColor=c4b5fd&labelColor=0b0714" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/HTML-1a1030?style=for-the-badge&logo=html5&logoColor=c4b5fd&labelColor=0b0714" alt="HTML"/>
+  <img src="https://img.shields.io/badge/CSS-1a1030?style=for-the-badge&logo=css&logoColor=c4b5fd&labelColor=0b0714" alt="CSS"/>
+  <img src="https://img.shields.io/badge/Shell-1a1030?style=for-the-badge&logo=gnubash&logoColor=c4b5fd&labelColor=0b0714" alt="Shell"/>
+  <img src="https://img.shields.io/badge/Python-aprendiendo-1a1030?style=for-the-badge&logo=python&logoColor=c4b5fd&labelColor=0b0714" alt="Python"/>
+</p>
+
+<p align="center">
   <a href="https://github.com/MelissaApaza2906/Escaneo_de_Plantas"><img src="assets/case-1.svg" width="49%" alt="Escaneo_de_Plantas"/></a>
   <a href="https://github.com/MelissaApaza2906/SECRET_FRIEND"><img src="assets/case-2.svg" width="49%" alt="SECRET_FRIEND"/></a>
 </p>
