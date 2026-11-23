@@ -22,8 +22,8 @@
 <p align="center">
   <b>¿Tienes un proyecto full stack o quieres revisar la seguridad de tu web?</b><br/><br/>
   <a href="https://github.com/MelissaApaza2906"><img src="assets/btn-github.svg" height="44" alt="GitHub"/></a>
-  <a href="https://www.linkedin.com/in/TU-USUARIO"><img src="assets/btn-linkedin.svg" height="44" alt="LinkedIn"/></a>
-  <a href="mailto:TU@CORREO.com"><img src="assets/btn-mail.svg" height="44" alt="Email"/></a>
+  <a href="https://www.linkedin.com/in/melissa-apaza-huarayo"><img src="assets/btn-linkedin.svg" height="44" alt="LinkedIn"/></a>
+  <a href="mailto:melissaapaza2906@gmail.com"><img src="assets/btn-mail.svg" height="44" alt="Email"/></a>
 </p>
 
 <!-- Se actualiza solo cada día con .github/workflows/update.yml -->
