@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/identity.svg" width="100%" alt="Melissa_Apaza2906 — Full Stack Developer → Security Engineer"/>
+  <img src="assets/identity.svg" width="100%" alt="Melissa Apaza — Full Stack Developer → Security Engineer"/>
 </p>
 
 <p align="center">
