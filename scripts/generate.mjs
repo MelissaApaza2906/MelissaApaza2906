@@ -4,8 +4,8 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 
 // ================== EDITA SOLO ESTO ==================
 const CONFIG = {
-  linkedin: 'https://www.linkedin.com/in/TU-USUARIO',   // tu link de LinkedIn
-  email: 'TU@CORREO.com',                               // tu correo
+  linkedin: 'https://www.linkedin.com/in/melissa-apaza-huarayo',   // tu link de LinkedIn
+  email: 'melissaapaza2906@gmail.com',                             // tu correo
   rol: 'Full Stack → Security',
   enfoque: 'Ciberseguridad (en formación)',
   ubicacion: 'Bolivia · UTC−4'
