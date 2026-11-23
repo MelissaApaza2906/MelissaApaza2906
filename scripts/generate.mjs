@@ -4,6 +4,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 
 // ================== EDITA SOLO ESTO ==================
 const CONFIG = {
+  nombre: 'Melissa Apaza',                             // nombre que se muestra
   linkedin: 'https://www.linkedin.com/in/melissa-apaza-huarayo',   // tu link de LinkedIn
   email: 'melissaapaza2906@gmail.com',                             // tu correo
   rol: 'Full Stack → Security',
@@ -34,6 +35,10 @@ let data = {
   ascii: null    // retrato ASCII generado desde la foto
 };
 
+// Grilla del retrato: 60 columnas x 40 filas se ve CUADRADA (los caracteres son más altos que anchos)
+const ASC_W = 60, ASC_H = 40, ASC_PX = 256;
+const inCircle = (i, j) => { const x = (i + .5) / ASC_W - .5, y = (j + .5) / ASC_H - .5; return x * x + y * y <= .24; };
+
 // Descarga tu foto de GitHub y la convierte en: foto incrustada + retrato ASCII
 async function processAvatar() {
   let sharp;
@@ -43,12 +48,13 @@ async function processAvatar() {
   const buf = Buffer.from(await res.arrayBuffer());
   const jpg = await sharp(buf).resize(240, 240, { fit: 'cover' }).jpeg({ quality: 82 }).toBuffer();
   data.photo = 'data:image/jpeg;base64,' + jpg.toString('base64');
-  const W = 44, H = 40, ramp = ' .:-=+*#%@';
-  const { data: px } = await sharp(buf).resize(W, H, { fit: 'cover' }).grayscale().normalise().raw().toBuffer({ resolveWithObject: true });
+  const W = ASC_W, H = ASC_H, ramp = ' .:-=+*#%@';
+  const sq = await sharp(buf).resize(240, 240, { fit: 'cover' }).toBuffer();
+  const { data: px } = await sharp(sq).resize(W, H, { fit: 'fill' }).grayscale().normalise().raw().toBuffer({ resolveWithObject: true });
   const rows = [];
   for (let j = 0; j < H; j++) {
     let line = '';
-    for (let i = 0; i < W; i++) line += ramp[Math.round((px[j * W + i] / 255) * (ramp.length - 1))];
+    for (let i = 0; i < W; i++) line += inCircle(i, j) ? ramp[Math.round((px[j * W + i] / 255) * (ramp.length - 1))] : ' ';
     rows.push(line);
   }
   data.ascii = rows;
@@ -122,15 +128,21 @@ const svg = (w, h, css, html, label) => `<svg xmlns="http://www.w3.org/2000/svg"
 <foreignObject x="0" y="0" width="${w}" height="${h}">
 <div xmlns="http://www.w3.org/1999/xhtml" class="root">
 <style>${BASE_CSS}${css}</style>
-${html}
+${html.replace(/<svg(?![^>]*xmlns)/g, '<svg xmlns="http://www.w3.org/2000/svg"')}
 </div>
 </foreignObject>
 </svg>`;
 
 // ---------- 1. Identidad + terminal ----------
+function asciiSvg(rows) {
+  const lh = ASC_PX / rows.length;
+  const t = rows.map((r, j) => `<text x="0" y="${((j + .82) * lh).toFixed(2)}" textLength="${ASC_PX}" lengthAdjust="spacingAndGlyphs" xml:space="preserve">${esc(r)}</text>`).join('');
+  return `<svg width="${ASC_PX}" height="${ASC_PX}" viewBox="0 0 ${ASC_PX} ${ASC_PX}" style="display:block;font-size:${(lh * 1.05).toFixed(2)}px;line-height:1;fill:#c4b5fd">${t}</svg>`;
+}
+
 function asciiPortrait() {
-  if (data.ascii) return data.ascii.map(r => `<div>${esc(r).replace(/ /g, '&#160;')}</div>`).join('');
-  const W = 44, H = 40, ramp = ' .:-=+*#%@', rows = [];
+  if (data.ascii) return asciiSvg(data.ascii);
+  const W = ASC_W, H = ASC_H, ramp = ' .:-=+*#%@', rows = [];
   const inside = (x, y) => {
     const hx = (x - .5) / .19, hy = (y - .33) / .23; if (hx * hx + hy * hy <= 1) return true;
     const a = (x - .5) / .25, b = (y - .42) / .3; if (y > .2 && y < .7 && a * a + b * b <= 1) return true;
@@ -141,6 +153,7 @@ function asciiPortrait() {
     let line = '';
     for (let i = 0; i < W; i++) {
       const x = i / (W - 1), y = j / (H - 1), h = Math.abs((i * 73856093) ^ (j * 19349663)) % 97;
+      if (!inCircle(i, j)) { line += ' '; continue; }
       if (inside(x, y)) {
         const dx = x - .36, dy = y - .24, light = 1 - Math.min(1, Math.hypot(dx, dy) * 1.5);
         line += ramp[Math.max(1, Math.min(9, Math.round(light * 8) + (h % 3) - 1))];
@@ -148,22 +161,35 @@ function asciiPortrait() {
     }
     rows.push(line);
   }
-  return rows.map(r => `<div>${esc(r).replace(/ /g, '&#160;')}</div>`).join('');
+  return asciiSvg(rows);
 }
 
-function shieldDots() {
-  const out = [], gl = ['·', '•', '+', '*', ':', '0', '1'];
-  const inShield = (x, y) => y >= .06 && y <= .96 && (y < .55 ? Math.abs(x - .5) < .4 : Math.abs(x - .5) < .4 * (1 - (y - .55) / .42));
-  const inLock = (x, y) => { const body = x > .37 && x < .63 && y > .44 && y < .7; const rx = (x - .5) / .1, ry = (y - .44) / .16, d = rx * rx + ry * ry; return body || (y < .44 && d <= 1 && d >= .4); };
-  for (let b = 0; b < 16; b++) for (let a = 0; a < 16; a++) {
-    const x = a / 15, y = b / 15, h = Math.abs((a * 2654435761) ^ (b * 40503)) % 100;
-    const lock = inLock(x, y), sh = inShield(x, y);
-    const edge = sh && (!inShield(x + .07, y) || !inShield(x - .07, y) || !inShield(x, y + .07));
-    if (lock || edge || (sh && h < 14)) {
-      out.push(`<span class="dot mono" style="left:${(x * 94).toFixed(1)}%;top:${(y * 90).toFixed(1)}%;font-size:${lock ? 11 : 10}px;color:${lock ? '#f0abfc' : edge ? '#c4b5fd' : '#7c5fc9'};animation-delay:${(((b * 16 + a) % 50) * .07).toFixed(2)}s">${lock ? '#' : gl[h % gl.length]}</span>`);
-    }
+// Escudo con candado + una "viborita" de datos que patrulla el perímetro
+function threatMap() {
+  const shield = 'M130 12 L182 30 L182 80 C182 116 158 140 130 156 C102 140 78 116 78 80 L78 30 Z';
+  const body = [];
+  const n = 14;
+  for (let i = 0; i < n; i++) {
+    const r = (4.2 - i * 0.22).toFixed(2);
+    const c = i === 0 ? '#f0abfc' : i < 4 ? '#e879f9' : i < 9 ? '#a78bfa' : '#6d4bc4';
+    body.push(`<circle r="${r}" fill="${c}"${i === 0 ? ' filter="url(#tmGlow)"' : ''}><animateMotion dur="6s" repeatCount="indefinite" begin="${(-i * 0.09).toFixed(2)}s" path="${shield}"/></circle>`);
   }
-  return out.join('');
+  return `<svg width="100%" height="100%" viewBox="0 0 260 168" preserveAspectRatio="xMidYMid meet" style="display:block">
+<defs>
+<pattern id="tmDots" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1" fill="#7c5fc9"/></pattern>
+<filter id="tmGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="tmClip"><path d="${shield}"/></clipPath>
+</defs>
+<circle cx="130" cy="84" r="78" fill="none" stroke="#2a1a47" stroke-dasharray="2 6"/>
+<path d="${shield}" fill="url(#tmDots)" class="tm-twinkle"/>
+<g clip-path="url(#tmClip)"><rect x="70" y="0" width="120" height="14" fill="#a78bfa" opacity=".25" class="tm-scan"/></g>
+<path d="${shield}" fill="none" stroke="#a78bfa" stroke-width="2" pathLength="100" class="tm-draw" filter="url(#tmGlow)"/>
+<path d="M115 82 V70 a15 15 0 0 1 30 0 V82" fill="none" stroke="#f0abfc" stroke-width="4" stroke-linecap="round" class="tm-shackle"/>
+<rect x="107" y="80" width="46" height="36" rx="6" fill="#1a1030" stroke="#f0abfc" stroke-width="2.5"/>
+<circle cx="130" cy="94" r="4.5" fill="#f0abfc" class="tm-key"/>
+<rect x="128" y="96" width="4" height="10" rx="1.5" fill="#f0abfc" class="tm-key"/>
+${body.join('')}
+</svg>`;
 }
 
 function identity() {
@@ -208,9 +234,9 @@ function identity() {
 .sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(167,139,250,.4),rgba(167,139,250,0) 22%,transparent 100%);animation:spin 4s linear infinite}
 .reveal{animation:reveal 9s cubic-bezier(.4,0,.2,1) infinite}
 @keyframes reveal{0%{clip-path:inset(0 0 100% 0);opacity:1}35%,40%{clip-path:inset(0 0 0 0);opacity:1}48%,86%{clip-path:inset(0 0 0 0);opacity:.12}94%,100%{clip-path:inset(0 0 0 0);opacity:0}}
-.photo{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.95) sepia(1) hue-rotate(225deg) saturate(2.4);opacity:0;animation:photo 9s ease infinite;box-shadow:0 0 0 2px #a78bfa,0 0 30px rgba(167,139,250,.6)}
+.photo{position:absolute;left:50%;top:50%;width:236px;height:236px;margin:-118px 0 0 -118px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.95) sepia(1) hue-rotate(225deg) saturate(2.4);opacity:0;animation:photo 9s ease infinite;box-shadow:0 0 0 2px #a78bfa,0 0 30px rgba(167,139,250,.6)}
 @keyframes photo{0%,38%{opacity:0;transform:scale(.96)}46%,84%{opacity:1;transform:none}92%,100%{opacity:0}}
-.photo-scan{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(7,5,13,.35) 0 1px,transparent 1px 3px);opacity:0;animation:photo 9s ease infinite;pointer-events:none}
+.photo-scan{position:absolute;left:50%;top:50%;width:236px;height:236px;margin:-118px 0 0 -118px;border-radius:50%;background:repeating-linear-gradient(0deg,rgba(7,5,13,.35) 0 1px,transparent 1px 3px);opacity:0;animation:photo 9s ease infinite;pointer-events:none}
 .beam{position:absolute;left:8%;right:8%;height:2px;background:#c4b5fd;box-shadow:0 0 14px 3px rgba(167,139,250,.8);animation:beam 9s cubic-bezier(.4,0,.2,1) infinite}
 @keyframes beam{0%{top:10%;opacity:1}35%{top:90%;opacity:1}38%,100%{top:90%;opacity:0}}
 .wire{stroke-dasharray:5 9;animation:wire 1.2s linear infinite}
@@ -228,8 +254,16 @@ function identity() {
 .roll{display:flex;flex-direction:column;animation:roll 9s cubic-bezier(.2,.8,.2,1) infinite}
 .roll span{height:38px}
 @keyframes roll{0%{transform:translateY(0)}30%,100%{transform:translateY(var(--to))}}
-.dot{position:absolute;line-height:1;opacity:0;text-shadow:0 0 6px rgba(167,139,250,.7);animation:dot 10s ease infinite}
-@keyframes dot{0%{opacity:0}6%,88%{opacity:1}100%{opacity:0}}
+.tm-draw{stroke-dasharray:100;animation:tmdraw 10s ease infinite}
+@keyframes tmdraw{0%{stroke-dashoffset:100}25%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:.4}}
+.tm-twinkle{animation:tmtw 3s ease-in-out infinite}
+@keyframes tmtw{50%{opacity:.45}}
+.tm-scan{animation:tmscan 4s linear infinite}
+@keyframes tmscan{from{transform:translateY(0)}to{transform:translateY(160px)}}
+.tm-shackle{transform-origin:145px 82px;animation:tmlock 5s ease-in-out infinite}
+@keyframes tmlock{0%,15%{transform:translateY(-7px)}25%,100%{transform:translateY(0)}}
+.tm-key{animation:tmkey 5s ease infinite}
+@keyframes tmkey{0%,24%{fill:#6d4bc4}30%,100%{fill:#f0abfc}}
 .marquee{display:flex;width:max-content;height:40px;align-items:center;font-size:12px;letter-spacing:2px;color:#c4b5fd;white-space:nowrap;animation:marquee 26s linear infinite}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .float{animation:float 6s ease-in-out infinite}
@@ -263,19 +297,19 @@ function identity() {
 <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2a1a47"></div>
 <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#2a1a47"></div>
 <div class="sweep"></div>
-<div class="reveal mono" style="position:absolute;inset:22px 20px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:7px;line-height:6.4px;color:#c4b5fd;white-space:pre;text-shadow:0 0 6px rgba(167,139,250,.6)">${asciiPortrait()}</div>
+<div class="reveal mono" style="position:absolute;left:50%;top:50%;width:${ASC_PX}px;height:${ASC_PX}px;margin:-${ASC_PX / 2}px 0 0 -${ASC_PX / 2}px;border-radius:50%;overflow:hidden;filter:drop-shadow(0 0 4px rgba(167,139,250,.6))">${asciiPortrait()}</div>
 ${data.photo ? `<img class="photo" src="${data.photo}" alt=""/><div class="photo-scan"></div>` : ''}
 <div class="beam"></div>
 </div></div></div>
 <div style="position:relative;height:96px">
 <svg width="${W - 2}" height="96" viewBox="0 0 ${W - 2} 96" fill="none" style="position:absolute;inset:0">
-<path class="wire" d="M582 0 C582 50, 210 40, 190 96" stroke="#8b5cf6" stroke-width="1.5"/>
-<path class="wire" d="M582 0 C582 55, 440 45, 430 96" stroke="#a78bfa" stroke-width="1.5"/>
-<path class="wire" d="M582 0 C582 50, 640 50, 650 96" stroke="#e879f9" stroke-width="1.5"/>
-<circle cx="582" cy="2" r="5" fill="#e879f9"/></svg>
-<span class="packet" style="offset-path:path('M582 0 C582 50, 210 40, 190 96')"></span>
-<span class="packet" style="offset-path:path('M582 0 C582 55, 440 45, 430 96');animation-delay:.8s"></span>
-<span class="packet" style="offset-path:path('M582 0 C582 50, 640 50, 650 96');animation-delay:1.6s"></span>
+<path class="wire" d="M624 0 C624 50, 210 40, 190 96" stroke="#8b5cf6" stroke-width="1.5"/>
+<path class="wire" d="M624 0 C624 55, 440 45, 430 96" stroke="#a78bfa" stroke-width="1.5"/>
+<path class="wire" d="M624 0 C624 50, 640 50, 650 96" stroke="#e879f9" stroke-width="1.5"/>
+<circle cx="624" cy="2" r="5" fill="#e879f9"/></svg>
+<span class="packet" style="offset-path:path('M624 0 C624 50, 210 40, 190 96')"></span>
+<span class="packet" style="offset-path:path('M624 0 C624 55, 440 45, 430 96');animation-delay:.8s"></span>
+<span class="packet" style="offset-path:path('M624 0 C624 50, 640 50, 650 96');animation-delay:1.6s"></span>
 <span class="mono" style="position:absolute;left:40px;top:34px;font-size:10px;letter-spacing:3px;color:#a39bbd">DECODING IDENTITY → SYSTEM.INFO</span>
 </div>
 <div style="position:relative;padding:0 26px 22px">
@@ -293,8 +327,8 @@ ${data.photo ? `<img class="photo" src="${data.photo}" alt=""/><div class="photo
 </div>
 <div class="cut-s" style="position:relative;height:200px;background:#07050d;border:1px solid #2a1a47;overflow:hidden">
 <div class="mono" style="position:absolute;left:12px;top:8px;font-size:9px;letter-spacing:3px;color:#a39bbd">THREAT.MAP</div>
-<div style="position:absolute;inset:24px 30px 18px">${shieldDots()}</div>
-<div class="mono" style="position:absolute;right:10px;bottom:6px;font-size:9px;color:#c4b5fd">integrity: OK</div>
+<div style="position:absolute;inset:22px 10px 18px">${threatMap()}</div>
+<div class="mono" style="position:absolute;left:12px;bottom:6px;font-size:9px;color:#a39bbd">perímetro: vigilado</div><div class="mono" style="position:absolute;right:10px;bottom:6px;font-size:9px;color:#c4b5fd">integrity: OK</div>
 </div></div></div></div></div></div>
 <div style="position:absolute;left:0;right:0;bottom:0;border-top:1px solid #2a1a47;background:rgba(139,92,246,.08);overflow:hidden;height:40px"><div class="marquee mono">${ticker}</div></div>
 </div></div>`;
@@ -392,6 +426,7 @@ const I = d => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stro
 
 // ---------- Escribir archivos ----------
 try { await fetchData(); } catch (e) { console.warn('API no disponible, uso datos de respaldo:', e.message); }
+if (CONFIG.nombre) data.name = CONFIG.nombre;
 try { await processAvatar(); } catch (e) { console.warn('Foto no procesada:', e.message); }
 mkdirSync('assets', { recursive: true });
 writeFileSync('assets/identity.svg', identity());
