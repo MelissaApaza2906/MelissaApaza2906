@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="410" height="170" viewBox="0 0 410 170" role="img" aria-label="Proyecto SECRET_FRIEND">
+<foreignObject x="0" y="0" width="410" height="170">
+<div xmlns="http://www.w3.org/1999/xhtml" class="root">
+<style>
+*{box-sizing:border-box}
+.root{width:100%;height:100%;background:#06040b;color:#ede9fe;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;}
+.mono{font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.cut{clip-path:polygon(30px 0,100% 0,100% calc(100% - 30px),calc(100% - 30px) 100%,0 100%,0 30px)}
+.cut-s{clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.edge{padding:1px;background:linear-gradient(140deg,#a78bfa 0%,#33215a 35%,#1a1030 60%,#e879f9 100%)}
+.body{position:relative;background:#07050d;overflow:hidden;height:100%}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(196,181,253,.035) 0 1px,transparent 1px 3px)}
+.tab{display:inline-block;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);background:#8b5cf6;color:#0b0714;font-size:11px;font-weight:700;letter-spacing:3px;padding:10px 34px 10px 40px;font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shine{background:linear-gradient(90deg,#8b5cf6,#e879f9,#8b5cf6);background-size:200% 100%;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+</style>
+<div class="cut-s" style="padding:1px;height:170px;background:linear-gradient(160deg,#33215a,#1a1030)"><div class="cut-s body" style="padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+<div class="scan"></div>
+<div class="mono" style="position:relative;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:#a39bbd"><span>CASE #003</span><span style="color:#a39bbd"><span class="pulse">●</span> ARCHIVADO</span></div>
+<div class="mono" style="position:relative;font-size:17px;font-weight:700;color:#f5f3ff">SECRET_FRIEND</div>
+<div style="position:relative;font-size:13px;color:#a39bbd;height:34px;overflow:hidden">Proyecto en mi GitHub.</div>
+<div class="mono" style="position:relative;display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-top:auto"><span style="padding:3px 10px;border-radius:999px;border:1px solid #8b5cf6;color:#c4b5fd">CSS</span><span style="color:#a39bbd"> →</span></div>
+</div></div>
+</div>
+</foreignObject>
+</svg>

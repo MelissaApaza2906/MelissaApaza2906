@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="44" viewBox="0 0 170 44" role="img" aria-label="LinkedIn">
+<foreignObject x="0" y="0" width="170" height="44">
+<div xmlns="http://www.w3.org/1999/xhtml" class="root">
+<style>
+*{box-sizing:border-box}
+.root{width:100%;height:100%;background:#06040b;color:#ede9fe;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;}
+.mono{font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.cut{clip-path:polygon(30px 0,100% 0,100% calc(100% - 30px),calc(100% - 30px) 100%,0 100%,0 30px)}
+.cut-s{clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.edge{padding:1px;background:linear-gradient(140deg,#a78bfa 0%,#33215a 35%,#1a1030 60%,#e879f9 100%)}
+.body{position:relative;background:#07050d;overflow:hidden;height:100%}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(196,181,253,.035) 0 1px,transparent 1px 3px)}
+.tab{display:inline-block;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);background:#8b5cf6;color:#0b0714;font-size:11px;font-weight:700;letter-spacing:3px;padding:10px 34px 10px 40px;font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shine{background:linear-gradient(90deg,#8b5cf6,#e879f9,#8b5cf6);background-size:200% 100%;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+</style>
+<div class="cut-s" style="padding:1px;height:44px;background:linear-gradient(90deg,#8b5cf6,#e879f9)"><div class="cut-s mono" style="height:42px;background:#0b0714;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:#ede9fe"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</div></div>
+</div>
+</foreignObject>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="290" viewBox="0 0 840 290" role="img" aria-label="Ruta: Full Stack completado, seguridad en curso">
+<foreignObject x="0" y="0" width="840" height="290">
+<div xmlns="http://www.w3.org/1999/xhtml" class="root">
+<style>
+*{box-sizing:border-box}
+.root{width:100%;height:100%;background:#06040b;color:#ede9fe;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;}
+.mono{font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.cut{clip-path:polygon(30px 0,100% 0,100% calc(100% - 30px),calc(100% - 30px) 100%,0 100%,0 30px)}
+.cut-s{clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.edge{padding:1px;background:linear-gradient(140deg,#a78bfa 0%,#33215a 35%,#1a1030 60%,#e879f9 100%)}
+.body{position:relative;background:#07050d;overflow:hidden;height:100%}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(196,181,253,.035) 0 1px,transparent 1px 3px)}
+.tab{display:inline-block;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);background:#8b5cf6;color:#0b0714;font-size:11px;font-weight:700;letter-spacing:3px;padding:10px 34px 10px 40px;font-family:'JetBrains Mono','Cascadia Code','Fira Code',Consolas,ui-monospace,monospace;}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shine{background:linear-gradient(90deg,#8b5cf6,#e879f9,#8b5cf6);background-size:200% 100%;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.glow{animation:glow 2s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 22px rgba(232,121,249,.8)}}.prog{animation:prog 4s ease-in-out infinite alternate}@keyframes prog{from{width:30%}to{width:45%}}</style>
+<div class="cut edge" style="height:290px"><div class="cut body"><div class="scan"></div>
+<div style="position:relative;display:flex;justify-content:space-between;align-items:center;padding-right:26px"><span class="tab">CLEARANCE.LEVELS</span><span class="mono" style="font-size:11px;color:#a39bbd">$ sudo -l · ruta hacia ciberseguridad</span></div>
+<div style="position:relative;padding:30px 30px 0 40px"><div style="position:absolute;left:14%;right:12%;top:52px;height:2px;background:#33215a"><div class="prog shine" style="height:2px"></div></div>
+<div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:12px"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><div class="mono " style="width:44px;height:44px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;border:2px solid #8b5cf6;background:#8b5cf6"><span style="transform:rotate(-45deg);font-size:13px;font-weight:700;color:#0b0714">01</span></div><span class="mono" style="font-size:10px;letter-spacing:2px;padding:3px 8px;border:1px solid #8b5cf6;color:#c4b5fd">COMPLETADO</span><div style="font-size:15px;font-weight:600;color:#f5f3ff">Full Stack</div><div style="font-size:12px;color:#a39bbd">Proyectos freelance</div></div><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><div class="mono glow" style="width:44px;height:44px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;border:2px solid #e879f9;background:rgba(232,121,249,.15)"><span style="transform:rotate(-45deg);font-size:13px;font-weight:700;color:#f5f3ff">02</span></div><span class="mono" style="font-size:10px;letter-spacing:2px;padding:3px 8px;border:1px solid #e879f9;color:#f0abfc">EN CURSO</span><div style="font-size:15px;font-weight:600;color:#f5f3ff">Fundamentos de seguridad</div><div style="font-size:12px;color:#a39bbd">Especialización en curso</div></div><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><div class="mono " style="width:44px;height:44px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;border:2px solid #4c2f8a;background:#0e0918"><span style="transform:rotate(-45deg);font-size:13px;font-weight:700;color:#f5f3ff">03</span></div><span class="mono" style="font-size:10px;letter-spacing:2px;padding:3px 8px;border:1px solid #4c2f8a;color:#a39bbd">SIGUIENTE</span><div style="font-size:15px;font-weight:600;color:#f5f3ff">Certificación</div><div style="font-size:12px;color:#a39bbd">Por definir</div></div><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><div class="mono " style="width:44px;height:44px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;border:2px solid #4c2f8a;background:#0e0918"><span style="transform:rotate(-45deg);font-size:13px;font-weight:700;color:#f5f3ff">04</span></div><span class="mono" style="font-size:10px;letter-spacing:2px;padding:3px 8px;border:1px solid #4c2f8a;color:#a39bbd">OBJETIVO</span><div style="font-size:15px;font-weight:600;color:#f5f3ff">Ciberseguridad profesional</div><div style="font-size:12px;color:#a39bbd">Seguridad para clientes reales</div></div></div></div></div></div>
+</div>
+</foreignObject>
+</svg>
